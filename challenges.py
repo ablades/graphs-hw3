@@ -28,17 +28,24 @@ def numIslands(grid):
                     adjPos = len(grid[i]) * i + (j - 1)
                     graph.add_edge(pos, adjPos)
 
-    return graph
+    return len(graph.find_connected_components())
 
 
 if __name__ == "__main__":
 
+    # Test Cases
     map1 = [
         [1, 1, 1, 1, 0],
         [1, 1, 0, 1, 0],
         [1, 1, 0, 0, 0],
         [0, 0, 0, 0, 0]
     ]
-    graph = numIslands(map1)
+    print(numIslands(map1))
 
-    print(graph.get_vertices())
+    map2 = [
+        [1, 1, 0, 0, 0],
+        [1, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1]
+    ]
+    print(numIslands(map2))
