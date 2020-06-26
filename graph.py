@@ -406,3 +406,32 @@ class Graph:
         item = stack.pop()
         stack.appendleft(item)
         return list(stack)
+
+    def bfs_calculate_depth(self, start_id):
+        """
+        Traverse the graph using breadth-first search.
+        """
+        # Keep a set to denote which vertices we've seen before
+        seen = set()
+        seen.add(start_id)
+        max_depth = 0
+
+        # Keep a queue so that we visit vertices in the appropriate order
+        queue = deque()
+        queue.append((self.get_vertex(start_id), 0))
+
+        while queue:
+            current_vertex_obj = queue.popleft()
+            current_depth = current_vertex_obj[1]
+            current_vertex_id = current_vertex_obj[0].get_id()
+            # set new depth
+            if current_depth > max_depth:
+                max_depth = current_depth
+
+            # Add its neighbors to the queue
+            for neighbor in current_vertex_obj[0].get_neighbors():
+                if neighbor.get_id() not in seen:
+                    seen.add(neighbor.get_id())
+                    queue.append((neighbor, current_depth + 1))
+
+        return max_depth
