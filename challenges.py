@@ -75,6 +75,25 @@ def timeToRot(grid):
     return max_depth
 
 
+def courseOrder(numCourses, prerequisites):
+    """Return a course schedule according to the prerequisites provided."""
+    graph = Graph(is_directed=True)
+
+    for _, req in enumerate(prerequisites):
+
+        # course is not in graph add it
+        if not graph.contains_id(req[0]):
+            graph.add_vertex(req[0])
+
+        if not graph.contains_id(req[1]):
+            graph.add_vertex(req[1])
+
+        graph.add_edge(req[1], req[0])
+
+    visited = set()
+    return graph.get_connected(0, visited.add)
+
+
 if __name__ == "__main__":
 
     # Test Cases
@@ -112,3 +131,9 @@ if __name__ == "__main__":
         [0, 2]
     ]
     print(timeToRot(oranges3))
+
+    courses1 = [[1, 0]]
+    print(courseOrder(2, courses1))
+
+    courses2 = [[1, 0], [2, 0], [3, 1], [3, 2]]
+    print(courseOrder(4, courses2))
