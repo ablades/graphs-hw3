@@ -3,20 +3,42 @@ from graph import Graph, Vertex
 
 # problem 1
 def numIslands(grid):
-    """Take in a grid of 1s (land) and 0s (water) and return the number of islands."""
+    """Take in a grid of 1s (land) and 0s (water) and return
+    the number of islands.
+    """
+
     graph = Graph(is_directed=False)
 
-    #one possible approach
-        #build a graph
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            # position of the item as well as id
+            pos = len(grid[i]) * i + j
 
-            #loop over all verticies 
-                #check if a vertex has been visited
-                # if it has not perform a bfs and increment land count
-                # if it has already been seen its already connected - skip
+            if grid[i][j] == 1:
+                # add vertex to graph
+                graph.add_vertex(pos)
 
-            # return count == # of islands
+                # look up bounds and check connection
+                if i > 0 and grid[i - 1][j] == 1:
+                    adjPos = len(grid[i - 1]) * (i - 1) + j
+                    graph.add_edge(pos, adjPos)
 
-    # second approach
-        # just call connected componenets :))
+                # look left bounds and check connection
+                if j > 0 and grid[i][j - 1] == 1:
+                    adjPos = len(grid[i]) * i + (j - 1)
+                    graph.add_edge(pos, adjPos)
 
-    pass
+    return graph
+
+
+if __name__ == "__main__":
+
+    map1 = [
+        [1, 1, 1, 1, 0],
+        [1, 1, 0, 1, 0],
+        [1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    graph = numIslands(map1)
+
+    print(graph.get_vertices())
